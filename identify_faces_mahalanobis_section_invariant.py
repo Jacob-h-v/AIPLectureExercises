@@ -54,8 +54,8 @@ def compare_new_face(new_face_file_path, existing_data1, existing_data2):
 
 
 # Call the definitions
-negative_face_path = "C:/Users/Lokth/PycharmProjects/AIPLecture1/NegativeFaces.csv"
-positive_face_path = "C:/Users/Lokth/PycharmProjects/AIPLecture1/PositiveFaces.csv"
+negative_face_path = ""
+positive_face_path = ""
 new_face_path = ""
 negative_face_data = read_csv(negative_face_path)
 positive_face_data = read_csv(positive_face_path)
