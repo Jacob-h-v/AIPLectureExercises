@@ -41,23 +41,23 @@ def compare_new_face(new_face_file_path, existing_data1, existing_data2):
     new_data = read_csv(new_face_file_path)
 
     # Calculate the mahalanobis distances to each existing file
-    distance_to_file1 = mahalanobis_distance(new_data[0], existing_data1[0])
-    distance_to_file2 = mahalanobis_distance(new_data[0], existing_data2[0])
+    similarity_to_negative_face = mahalanobis_distance(new_data[0], existing_data1[0])
+    similarity_to_positive_face = mahalanobis_distance(new_data[0], existing_data2[0])
 
     # Determine which file is more similar
-    if distance_to_file1[0] < distance_to_file2[0]:
+    if similarity_to_negative_face[0] < similarity_to_positive_face[0]:
         print(f"The new face is more similar to the negative face")
-    elif distance_to_file1[0] > distance_to_file2[0]:
+    elif similarity_to_negative_face[0] > similarity_to_positive_face[0]:
         print(f"The new face is more similar to the positive face")
     else:
         print(f"The new face is equally similar to the positive and negative faces")
 
 
 # Call the definitions
-file1_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\NegativeFaces.csv"
-file2_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\PositiveFaces.csv"
-input_file_path = ""
-data1 = read_csv(file1_path)
-data2 = read_csv(file2_path)
+negative_face_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\NegativeFaces.csv"
+positive_face_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\PositiveFaces.csv"
+new_face_path = ""
+negative_face_data = read_csv(negative_face_path)
+positive_face_data = read_csv(positive_face_path)
 
-compare_new_face(input_file_path, data1, data2)
+compare_new_face(new_face_path, negative_face_data, positive_face_data)
