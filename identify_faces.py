@@ -1,0 +1,63 @@
+import numpy as np
+
+
+def read_csv(file_path):
+    with open(file_path, "r") as file:
+        lines = file.readlines()
+    # Skip header line
+    data = [list(map(float, line.strip().split(","))) for line in lines[1:]]
+    return data
+
+
+def calculate_mean_and_cov(face):
+    # Calculate the mean of the face
+    mean = np.mean(face, axis=0)
+
+    # Calculate the face's covariance matrix
+    covariance_matrix = np.cov(face, rowvar=False)
+
+    return mean, covariance_matrix
+
+
+def mahalanobis_distance(face1, face2):
+    mean1, cov1 = calculate_mean_and_cov(face1)
+    mean2, cov2 = calculate_mean_and_cov(face2)
+
+    # Calculate the inverse covariance matrices for face 1 and 2
+    inv_cov1 = np.linalg.inv(cov1)
+    inv_cov2 = np.linalg.inv(cov2)
+
+    # Calculate the mahalanobis distances
+    diff1 = mean1 - mean2
+    diff2 = mean2 - mean1
+    mahalanobis_distance1 = np.sqrt(np.dot(diff1, np.dot(inv_cov1, diff1)))
+    mahalanobis_distance2 = np.sqrt(np.dot(diff2, np.dot(inv_cov2, diff2)))
+
+    return mahalanobis_distance1, mahalanobis_distance2
+
+
+def compare_new_face(new_face_file_path, existing_data1, existing_data2):
+    # Read and pre-process data from new face file
+    new_data = read_csv(new_face_file_path)
+
+    # Calculate the mahalanobis distances to each existing file
+    distance_to_file1 = mahalanobis_distance(new_data[0], existing_data1[0])
+    distance_to_file2 = mahalanobis_distance(new_data[0], existing_data2[0])
+
+    # Determine which file is more similar
+    if distance_to_file1[0] < distance_to_file2[0]:
+        print(f"The new face is more similar to the negative face")
+    elif distance_to_file1[0] > distance_to_file2[0]:
+        print(f"The new face is more similar to the positive face")
+    else:
+        print(f"The new face is equally similar to the positive and negative faces")
+
+
+# Call the definitions
+file1_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\NegativeFaces.csv"
+file2_path = "C:\Users\Lokth\PycharmProjects\AIPLecture1\PositiveFaces.csv"
+input_file_path = ""
+data1 = read_csv(file1_path)
+data2 = read_csv(file2_path)
+
+compare_new_face(input_file_path, data1, data2)
