@@ -69,8 +69,6 @@ class DraggablePoints:
     def on_release(self, event):
         self.selected_point = None
 
-import os
-
 def save_face_to_csv(points_data, type_of_face):
     face = np.array(points_data).flatten().astype(int)
     file_exists = os.path.isfile(f'{type_of_face}.csv')
