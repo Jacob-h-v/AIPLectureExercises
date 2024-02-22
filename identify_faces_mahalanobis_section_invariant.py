@@ -8,6 +8,7 @@ def read_csv(file_path):
     data = [list(map(float, line.strip().split(","))) for line in lines[1:]]
     # Reshape each face into a two-dimensional array
     faces = [np.array(face).reshape(-1, 2) for face in data]
+    print(f"New face import begins here \n {faces}")
     return faces
 
 
