@@ -3,6 +3,14 @@ import numpy as np
 import mplcursors
 import os
 # Credit: Frederik Roland
+
+# Check whether plots are interactive or not ... interactive mode is most useful from the command line
+if plt.isinteractive() == True:
+    print("Interactive mode is TRUE - exiting.")
+    exit()
+else:
+    print("interactive mode is FALSE - remember to close graph window.")
+
 class DraggablePoints:
     def __init__(self, ax, points_data):
         self.ax = ax

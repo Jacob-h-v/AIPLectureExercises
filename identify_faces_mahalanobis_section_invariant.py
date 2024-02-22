@@ -6,7 +6,9 @@ def read_csv(file_path):
         lines = file.readlines()
     # Skip header line
     data = [list(map(float, line.strip().split(","))) for line in lines[1:]]
-    return data
+    # Reshape each face into a two-dimensional array
+    faces = [np.array(face).reshape(-1, 2) for face in data]
+    return faces
 
 
 def calculate_mean_and_cov(face):
@@ -22,6 +24,14 @@ def calculate_mean_and_cov(face):
 def mahalanobis_distance(face1, face2):
     mean1, cov1 = calculate_mean_and_cov(face1)
     mean2, cov2 = calculate_mean_and_cov(face2)
+
+    # Check if the covariance matrix is two-dimensional and invertible
+    if cov1.ndim != 2 or np.linalg.det(cov1) == 0:
+        print("Covariance matrix for face1 is not invertible.")
+        return float('inf'), float('inf')
+    if cov2.ndim != 2 or np.linalg.det(cov2) == 0:
+        print("Covariance matrix for face2 is not invertible.")
+        return float('inf'), float('inf')
 
     # Calculate the inverse covariance matrices for face 1 and 2
     inv_cov1 = np.linalg.inv(cov1)
