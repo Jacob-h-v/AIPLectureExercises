@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import mplcursors
 import os
-
+# Credit: Frederik Roland
 class DraggablePoints:
     def __init__(self, ax, points_data):
         self.ax = ax
